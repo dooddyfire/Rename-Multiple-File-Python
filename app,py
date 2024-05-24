@@ -1,0 +1,30 @@
+import os
+
+# ลิสไฟล์ทั้งหมดใน โฟลเดอร์
+items = os.listdir()
+
+for item in items:
+    # วนลูปไฟล์ทั้งหมดที่ path ปัจจุบัน แล้วเช็คว่าเป็น Folder ไหม ถ้าเป็นเข้า if นี้ 
+    if os.path.isdir(item):  
+        folder_name = item
+        print("Path ปัจจุบัน : ",os.getcwd())
+        folder_path = os.path.join(os.getcwd(), folder_name)
+        files = os.listdir(folder_path)
+        
+        for index, file in enumerate(files):
+            file_path = os.path.join(folder_path, file)
+            if os.path.isfile(file_path):
+
+                # สร้างชื่อไฟล์ใหม่ format ตามนี้   ชื่อโฟลเดอร์_ลำดับ.นามสกุลไฟล์ เช่น Apple_1.jpg Apple_2.webp
+                new_file_name = f"{folder_name}_{index + 1}"
+
+                # เก็บนามสกุล (extension) ปัจจุบันเอาไว้
+                file_extension = os.path.splitext(file)[1]  
+                new_file_name_with_extension = new_file_name + file_extension
+                
+                # เก็บ path ใหม่ของ file ที่ rename 
+                new_file_path = os.path.join(folder_path, new_file_name_with_extension)
+                
+                # Rename ไฟล์ 
+                os.rename(file_path, new_file_path)
+                print(f"Renamed {file_path} to {new_file_path}")
